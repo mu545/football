@@ -1,0 +1,26 @@
+{
+  "name": "soccer-info",
+  "version": "0.0.1",
+  "description": "The web app will help people to get soccer information",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mu545/soccer-info.git"
+  },
+  "keywords": [
+    "pwa",
+    "spa",
+    "web",
+    "app",
+    "soccer"
+  ],
+  "author": "Musa Sutisna <mus4.sutisn4@gmail.com> (https://github.com/mu545)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mu545/soccer-info/issues"
+  },
+  "homepage": "https://github.com/mu545/soccer-info#readme"
+}
