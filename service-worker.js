@@ -15,8 +15,7 @@ const CONFIG_CACHE_URLS = [
   '/js/index.js',
   '/js/materialize.min.js',
   '/index.html',
-  '/nav.html',
-  '/pages/home.html'
+  '/pages/home/index.html'
 ]
 
 self.addEventListener('install', function (event) {
