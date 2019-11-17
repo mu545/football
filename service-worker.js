@@ -45,10 +45,23 @@ self.addEventListener('activate', function (event) {
 })
 
 self.addEventListener('fetch', function (event) {
-  event.respondWith(
-    caches.match(event.request)
-      .then(function (response) {
-        return response || fetch(event.request)
-      })
-  )
+  if (event.request.url.indexOf('https://api.football-data.org/v2/') > -1) {
+    event.respondWith(
+      caches.open(CONFIG_CACHE_NAME)
+        .then(function (cache) {
+          return fetch(event.request)
+            .then(function (response) {
+              cache.put(event.request.url, response.clone())
+              return response
+            })
+        })
+    )
+  } else {
+    event.respondWith(
+      caches.match(event.request, { ignoreSearch: true })
+        .then(function (response) {
+          return response || fetch(event.request)
+        })
+    )
+  }
 })
