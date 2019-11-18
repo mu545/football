@@ -1,16 +1,12 @@
-// Register service worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(function () {
-        console.log('Service worker: registered')
-      })
-      .catch(function () {
-        console.log('Service worker: could not be registered')
-      })
-  })
-} else {
-  console.log('Service worker: browser not support')
+// Register global variable
+var soccer = {
+  // current page
+  main_page: '',
+  current_page: '',
+  // current container
+  container: null,
+  // available pages
+  pages: {}
 }
 
 /**
@@ -57,4 +53,25 @@ function responseJSON(fetchResponse) {
  */
 function logError(error) {
   console.log(`Error: ${error}`)
+}
+
+/**
+ * Load requested page or reload current page.
+ *
+ * @param   string
+ * @return  promise
+ */
+function loadPage(pathPage) {
+  if (typeof pathPage === 'undefined') {
+    pathPage = soccer.current_page
+  }
+
+  return fetch(`/pages/${pathPage}.html`)
+    .then(responseStatus)
+    .then(responseText)
+    .then(function (pageContent) {
+      soccer.current_page = pathPage
+
+      return Promise.resolve(pageContent)
+    })
 }

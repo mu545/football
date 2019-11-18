@@ -1,50 +1,72 @@
 document.addEventListener('DOMContentLoaded', function () {
-  let mainPage = window.location.pathname
+  // Initialization global variable
+  soccer.main_page = window.location.pathname
     .substr(1, Math.ceil(window.location.pathname.indexOf('.') - 1))
     .toLowerCase()
 
-  if (mainPage === '' || mainPage === 'index') mainPage = 'home'
+  if (soccer.main_page === '' || soccer.main_page === 'index') {
+    soccer.main_page = 'home'
+  }
 
-  let currentPage = window.location.hash.substr(1).toLowerCase()
+  soccer.current_page = window.location.hash.substr(1).toLowerCase()
 
-  if (currentPage === '') currentPage = mainPage + '/index'
+  if (soccer.current_page === '') {
+    soccer.current_page = soccer.main_page + '/index'
+  }
 
-  // Activate sidebar nav
+  soccer.container = document.getElementById('Container')
+
+  // Load available navigation
+  // copy navigation on top to side.
   let sideNav = M.Sidenav.init(document.getElementById('SideNav'))
 
-  // current container
-  let container = document.getElementById('Container')
+  document.querySelectorAll('.topnav')
+    .forEach(function (nav) {
+      sideNav.el.innerHTML = nav.innerHTML
+    })
+})
 
-  copyNav()
-  loadPage(currentPage)
-
-  /**
-   * Load available navigation
-   * copy navigation on top to side.
-   *
-   * @param   void
-   */
-  function copyNav() {
-    document.querySelectorAll('.topnav')
-      .forEach(function (nav) {
-        sideNav.el.innerHTML = nav.innerHTML
+window.addEventListener('load', function () {
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(function () {
+        console.log('Service worker: registered')
+        loadCurrentPage()
       })
+      .catch(function () {
+        console.log('Service worker: could not be registered')
+        loadCurrentPage()
+      })
+  } else {
+    console.log('Service worker: browser not support')
+    loadCurrentPage()
   }
 
   /**
-   * Load requested page.
+   * Load current page
+   * fill content to container and run page init.
    *
-   * @param   string
    * @return  void
    */
-  function loadPage(pathPage) {
-    fetch(`/pages/${pathPage}.html`)
-      .then(responseStatus)
-      .then(responseText)
-      .then(function (data) {
-        currentPage = pathPage
-        container.innerHTML = data
+  function loadCurrentPage() {
+    loadPage()
+      .then(function (pageContent) {
+        soccer.container.innerHTML = pageContent
+        soccer.pages[soccer.current_page]()
       })
-      .catch(logError)
+      .catch(function (err) {
+        if (err.message === 'Not Found') {
+          soccer.container.innerHTML =  `
+                                        <p class="center-align"><img src="/images/sick.png"></p>
+                                        <p class="center-align">Halaman tidak ditemukan</p>
+                                        `
+        } else {
+          soccer.container.innerHTML =  `
+                                        <p class="center-align"><img src="/images/sick.png"></p>
+                                        <p class="center-align">Ups... halaman tidak dapat diakses</p>
+                                        `
+        }
+      })
   }
 })

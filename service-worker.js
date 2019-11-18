@@ -11,9 +11,10 @@ const CONFIG_CACHE_URLS = [
   '/images/icon-256x256.png',
   '/images/icon-386x386.png',
   '/images/icon-512x512.png',
+  '/images/sick.png',
   '/main.js',
-  '/js/index.js',
   '/js/materialize.min.js',
+  '/js/index.js',
   '/index.html',
   '/pages/home/index.html'
 ]
