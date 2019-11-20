@@ -12,9 +12,13 @@ const CONFIG_CACHE_URLS = [
   '/images/icon-386x386.png',
   '/images/icon-512x512.png',
   '/images/sick.png',
+  '/images/sport-cup.png',
+  '/images/sport-podium.png',
+  '/images/sport-watch.png',
   '/main.js',
   '/js/materialize.min.js',
   '/js/index.js',
+  '/js/home.js',
   '/index.html',
   '/pages/home/index.html'
 ]
