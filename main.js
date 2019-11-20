@@ -75,3 +75,24 @@ function loadPage(pathPage) {
       return Promise.resolve(pageContent)
     })
 }
+
+/**
+ * Handle load page error
+ * fill container with page error message.
+ *
+ * @param   object
+ * @return  void
+ */
+function pageError(err) {
+  if (err.message === 'Not Found') {
+    soccer.container.innerHTML =  `
+                                  <p class="center-align"><img src="/images/sick.png"></p>
+                                  <p class="center-align">Halaman tidak ditemukan</p>
+                                  `
+  } else {
+    soccer.container.innerHTML =  `
+                                  <p class="center-align"><img src="/images/sick.png"></p>
+                                  <p class="center-align">Ups... halaman tidak dapat diakses</p>
+                                  `
+  }
+}

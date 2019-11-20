@@ -55,18 +55,6 @@ window.addEventListener('load', function () {
         soccer.container.innerHTML = pageContent
         soccer.pages[soccer.current_page]()
       })
-      .catch(function (err) {
-        if (err.message === 'Not Found') {
-          soccer.container.innerHTML =  `
-                                        <p class="center-align"><img src="/images/sick.png"></p>
-                                        <p class="center-align">Halaman tidak ditemukan</p>
-                                        `
-        } else {
-          soccer.container.innerHTML =  `
-                                        <p class="center-align"><img src="/images/sick.png"></p>
-                                        <p class="center-align">Ups... halaman tidak dapat diakses</p>
-                                        `
-        }
-      })
+      .catch(pageError)
   }
 })

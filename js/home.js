@@ -12,6 +12,10 @@ soccer.pages['home/index'] = function (container) {
 
       menu.addEventListener('click', function () {
         loadPage(pathPage)
+          .then(function (pageContent) {
+            soccer.container.innerHTML = pageContent
+          })
+          .catch(pageError)
       })
     })
 }
