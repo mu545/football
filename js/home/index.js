@@ -1,10 +1,9 @@
 /**
  * Home index init.
  *
- * @param   dom
  * @return  void
  */
-soccer.pages['home/index'] = function (container) {
+soccer.pages['home/index'] = function () {
   // open page on click home menu
   document.querySelectorAll('#HomeMenus a')
     .forEach(function (menu) {
@@ -14,6 +13,7 @@ soccer.pages['home/index'] = function (container) {
         loadPage(pathPage)
           .then(function (pageContent) {
             soccer.container.innerHTML = pageContent
+            soccer.pages[soccer.current_page]()
           })
           .catch(pageError)
       })

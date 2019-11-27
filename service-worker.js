@@ -18,10 +18,14 @@ const CONFIG_CACHE_URLS = [
   '/main.js',
   '/js/materialize.min.js',
   '/js/index.js',
-  '/js/home.js',
+  '/js/football-data.js',
+  '/js/home/index.js',
+  '/js/home/league.js',
   '/index.html',
-  '/pages/home/index.html'
+  '/pages/home/index.html',
+  '/pages/home/league.html'
 ]
+CONFIG_API_URL = 'http://localhost:3000/users/api/v1'
 
 self.addEventListener('install', function (event) {
   event.waitUntil(
@@ -50,7 +54,7 @@ self.addEventListener('activate', function (event) {
 })
 
 self.addEventListener('fetch', function (event) {
-  if (event.request.url.indexOf('https://api.football-data.org/v2/') > -1) {
+  if (event.request.url.indexOf(CONFIG_API_URL) > -1) {
     event.respondWith(
       caches.open(CONFIG_CACHE_NAME)
         .then(function (cache) {

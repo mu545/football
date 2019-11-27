@@ -6,7 +6,9 @@ var soccer = {
   // current container
   container: null,
   // available pages
-  pages: {}
+  pages: {},
+  // football-data api handler
+  api_url: 'http://localhost:3000/users/api/v1'
 }
 
 /**
@@ -94,5 +96,7 @@ function pageError(err) {
                                   <p class="center-align"><img src="/images/sick.png"></p>
                                   <p class="center-align">Ups... halaman tidak dapat diakses</p>
                                   `
+
+    logError(err)
   }
 }
