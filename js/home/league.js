@@ -38,11 +38,14 @@ soccer.pages['home/league'] = function () {
                          `
       }
 
+      let seasonYear = null
       let startDate = '-'
       let endDate = '-'
       let winner = '-'
 
       if (competition.currentSeason !== null) {
+        seasonYear = new Date(competition.currentSeason.startDate)
+        seasonYear = seasonYear.getFullYear()
         startDate = competition.currentSeason.startDate.replace(/\-/g, '/')
         endDate = competition.currentSeason.endDate.replace(/\-/g, '/')
 
@@ -62,7 +65,8 @@ soccer.pages['home/league'] = function () {
                     <a
                       class="secondary-content btn-small red lighten-3"
                       href="#league-detail"
-                      data-competition-id="${competition.id}">&#x279f;</a>
+                      data-competition-id="${competition.id}"
+                      data-season-year="${seasonYear}">&#x279f;</a>
                   </div>
                  `
     })
@@ -88,7 +92,8 @@ soccer.pages['home/league'] = function () {
 
         soccer.container.innerHTML = pageContent
         soccer.pages[soccer.current_page]({
-          id: dataset.competitionId
+          id: dataset.competitionId,
+          season_year: dataset.seasonYear
         })
       })
       .catch(pageError)
@@ -101,6 +106,6 @@ soccer.pages['home/league'] = function () {
  * @param   object
  * @return  void
  */
-soccer.pages['home/league-detail'] = function () {
+soccer.pages['home/league-detail'] = function (query) {
 
 }
