@@ -52,42 +52,55 @@ soccer.pages['home/league'] = function () {
       }
 
       hLeague += `
-                        <a
-                          class="collection-item avatar"
-                          href="#detail-league"
-                          data-competition-id="${competition.id}">
-                          <img
-                            class="circle"
-                            src="/images/sport-cup.png">
-                          <p class="title purple-text text-darken-4">${competition.name}</p>
-                          <p><small class="grey-text text-darken-4">Season: ${startDate} - ${endDate}</small></p>
-                          <p><small class="grey-text text-darken-4">Winner: ${winner}</small></p>
-                        </a>
-                       `
+                  <div class="collection-item avatar">
+                    <img
+                      class="circle"
+                      src="/images/sport-cup.png">
+                    <p class="title purple-text text-darken-4">${competition.name}</p>
+                    <p><small class="grey-text text-darken-4">Season: ${startDate} - ${endDate}</small></p>
+                    <p><small class="grey-text text-darken-4">Winner: ${winner}</small></p>
+                    <a
+                      class="secondary-content btn-small red lighten-3"
+                      href="#league-detail"
+                      data-competition-id="${competition.id}">&#x279f;</a>
+                  </div>
+                 `
     })
 
     eListLeague.innerHTML = hLeague
 
-    eListLeague.querySelectorAll('.collection-item')
+    eListLeague.querySelectorAll('.collection-item a')
       .forEach(function (aLeague) {
-        aLeague.addEventListener('click', detailLeague)
+        aLeague.addEventListener('click', detailLeague, false)
       })
   }
 
   /**
    * Get detail a league.
    *
-   * @param   dom
+   * @param   object
    * @return  void
    */
   function detailLeague(e) {
     loadPage('home/league-detail')
       .then(function (pageContent) {
+        let dataset = e.target.dataset
+
         soccer.container.innerHTML = pageContent
         soccer.pages[soccer.current_page]({
-          id: e.dataset.competitionId
+          id: dataset.competitionId
         })
       })
       .catch(pageError)
   }
+}
+
+/**
+ * Home detail league init.
+ *
+ * @param   object
+ * @return  void
+ */
+soccer.pages['home/league-detail'] = function () {
+
 }
