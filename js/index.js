@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
   soccer.current_page = window.location.hash.substr(1).toLowerCase()
 
   if (soccer.current_page === '') {
-    soccer.current_page = soccer.main_page + '/index'
+    soccer.current_page = `${soccer.main_page}/index`
+  } else {
+    soccer.current_page = `${soccer.main_page}/${soccer.current_page}`
   }
 
   soccer.container = document.getElementById('Container')
