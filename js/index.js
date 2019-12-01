@@ -29,34 +29,54 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 window.addEventListener('load', function () {
-  // Register service worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(function () {
-        console.log('Service worker: registered')
-        loadCurrentPage()
-      })
-      .catch(function () {
-        console.log('Service worker: could not be registered')
-        loadCurrentPage()
-      })
-  } else {
-    console.log('Service worker: browser not support')
-    loadCurrentPage()
+  // Initialization page.
+  serviceWorker('Init')
+    .then(loadCurrentPage)
+    .then(console.log)
+    .catch(pageError)
+
+  /**
+   * Register service worker.
+   *
+   * @param   string
+   * @return  void
+   */
+  function serviceWorker(msgChain) {
+    if ('serviceWorker' in navigator) {
+      return navigator.serviceWorker.register('/service-worker.js')
+        .then(function () {
+          msgChain += '\nserviceWorker: registered'
+
+          return Promise.resolve(msgChain)
+        })
+        .catch(function () {
+          msgChain += '\nserviceWorker: could not be registered'
+
+          return Promise.resolve(msgChain)
+        })
+    } else {
+      msgChain += '\nserviceWorker: browser not support'
+
+      return Promise.resolve(msgChain)
+    }
   }
 
   /**
    * Load current page
    * fill content to container and run page init.
    *
-   * @return  void
+   * @param   string
+   * @return  promise
    */
-  function loadCurrentPage() {
-    loadPage()
+  function loadCurrentPage(msgChain) {
+    return loadPage()
       .then(function (pageContent) {
         soccer.container.innerHTML = pageContent
         soccer.pages[soccer.current_page]()
+
+        msgChain += `\nloadCurrentPage: ${soccer.current_page}`
+
+        return Promise.resolve(msgChain)
       })
-      .catch(pageError)
   }
 })
