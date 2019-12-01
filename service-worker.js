@@ -16,6 +16,7 @@ const CONFIG_CACHE_URLS = [
   '/images/sport-podium.png',
   '/images/sport-watch.png',
   '/main.js',
+  '/js/idb.min.js',
   '/js/materialize.min.js',
   '/js/index.js',
   '/js/football-data.js',

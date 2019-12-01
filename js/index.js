@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 window.addEventListener('load', function () {
   // Initialization page.
   serviceWorker('Init')
+    .then(openDB)
     .then(loadCurrentPage)
     .then(console.log)
     .catch(pageError)
@@ -39,7 +40,7 @@ window.addEventListener('load', function () {
    * Register service worker.
    *
    * @param   string
-   * @return  void
+   * @return  promise
    */
   function serviceWorker(msgChain) {
     if ('serviceWorker' in navigator) {
@@ -59,6 +60,24 @@ window.addEventListener('load', function () {
 
       return Promise.resolve(msgChain)
     }
+  }
+
+  /**
+   * Open database connection.
+   *
+   * @param   string
+   * @return  promise
+   */
+  function openDB(msgChain) {
+    soccer.db = idb.openDB(soccer.db_name, soccer.db_version, {
+      upgrade: function (db) {
+        
+      }
+    })
+
+    msgChain += '\nopenDB: database connected'
+
+    return Promise.resolve(msgChain)
   }
 
   /**

@@ -1,5 +1,9 @@
 // Register global variable
 var soccer = {
+  // database
+  db_name: 'soccer-info',
+  db_version: 1,
+  db: null,
   // current page
   main_page: '',
   current_page: '',
@@ -99,4 +103,80 @@ function pageError(err) {
 
     logError(err)
   }
+}
+
+/**
+ * Add data to database.
+ *
+ * @param   string
+ * @param   mixed
+ * @param   mixed
+ * @return  promise
+ */
+function dbAdd(storeName, data, key) {
+  return soccer.db.then(function (db) {
+    return db.transaction(storeName, 'readwrite')
+      .objectStore(storeName)
+      .add(data, key)
+  })
+}
+
+/**
+ * Get data from database.
+ *
+ * @param   string
+ * @param   mixed
+ * @return  promise
+ */
+function dbGet(storeName, key) {
+  return soccer.db.then(function (db) {
+    return db.transaction(storeName, 'readwrite')
+      .objectStore(storeName)
+      .get(key)
+  })
+}
+
+/**
+ * Update data in database.
+ *
+ * @param   string
+ * @param   mixed
+ * @param   mixed
+ * @return  promise
+ */
+function dbPut(storeName, data, key) {
+  return soccer.db.then(function (db) {
+    return db.transaction(storeName, 'readwrite')
+      .objectStore(storeName)
+      .put(data, key)
+  })
+}
+
+/**
+ * Delete data from database.
+ *
+ * @param   string
+ * @param   mixed
+ * @return  promise
+ */
+function dbDelete(storeName, key) {
+  return soccer.db.then(function (db) {
+    return db.transaction(storeName, 'readwrite')
+      .objectStore(storeName)
+      .delete(key)
+  })
+}
+
+/**
+ * Open store cursor database.
+ *
+ * @param   string
+ * @return  promise
+ */
+function dbCursor(storeName) {
+  return soccer.db.then(function (db) {
+    return db.transaction(storeName)
+      .store
+      .openCursor()
+  })
 }
