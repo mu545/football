@@ -50,3 +50,23 @@ function footballCompetitions() {
       }
     })
 }
+
+/**
+ * Get lists matches.
+ *
+ * @param   number
+ * @param   number
+ * @return  promise
+ */
+function footballMatches(leagueId, seasonYear) {
+  let url = `${soccer.api_url}/matches/${leagueId}/${seasonYear}`
+
+  return footballCache(url)
+    .then(function (res) {
+      if (res === null) {
+        return footballServer(url)
+      } else {
+        return Promise.resolve(res)
+      }
+    })
+}
