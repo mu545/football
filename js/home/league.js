@@ -206,6 +206,42 @@ soccer.pages['home/league-detail'] = function (query) {
 
     eListMatchesTable.innerHTML = hMatches
 
+    eListMatchesTable.querySelectorAll('a[href="#match-save"]')
+      .forEach(function (aMatch) {
+        aMatch.addEventListener('click', function () {
+          saveMatch(aMatch.dataset.matchKey)
+        })
+      })
+
     matches = res.matches
+  }
+
+  /**
+   * Save match to schedule.
+   *
+   * @param   number
+   * @return  void
+   */
+  function saveMatch(matchKey) {
+    let match = matches[matchKey]
+
+    dbGet('matches', match.id)
+      .then(function (currentMatch) {
+        if (currentMatch) {
+          return Promise.resolve(true)
+        } else {
+          return dbAdd('matches', match, match.id)
+        }
+      })
+      .then(function () {
+        M.toast({
+          html: 'match added to watching schedule'
+        })
+      })
+      .catch(function () {
+        M.toast({
+          html: 'match could not added to watching schedule'
+        })
+      })
   }
 }

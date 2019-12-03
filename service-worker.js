@@ -23,10 +23,12 @@ const CONFIG_CACHE_URLS = [
   '/js/football-data.js',
   '/js/home/index.js',
   '/js/home/league.js',
+  '/js/home/schedule.js',
   '/index.html',
   '/pages/home/index.html',
   '/pages/home/league.html',
-  '/pages/home/league-detail.html'
+  '/pages/home/league-detail.html',
+  '/pages/home/schedule.html'
 ]
 CONFIG_API_URL = 'http://localhost:3000/users/api/v1'
 

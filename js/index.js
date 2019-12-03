@@ -71,7 +71,13 @@ window.addEventListener('load', function () {
   function openDB(msgChain) {
     soccer.db = idb.openDB(soccer.db_name, soccer.db_version, {
       upgrade: function (db) {
-        
+        if (!db.objectStoreNames.contains('matches')) {
+          let matches = db.createObjectStore('matches')
+
+          matches.createIndex('id', 'id', {
+            unique: true
+          })
+        }
       }
     })
 
