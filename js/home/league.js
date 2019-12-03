@@ -130,78 +130,7 @@ soccer.pages['home/league-detail'] = function (query) {
     let hMatches = ''
 
     res.matches.forEach(function (match, key) {
-      let matchDate = new Date(match.utcDate)
-      let matchMonth = matchDate.getMonth()
-      matchMonth = matchMonth < 10 ? '0' + matchMonth : matchMonth
-      let matchDay = matchDate.getDate()
-      matchDay = matchDay < 10 ? '0' + matchDay : matchDay
-      let matchYear = matchDate.getFullYear()
-      matchYear = matchYear % 100
-      let matchHour = matchDate.getHours()
-      let matchMinute = matchDate.getMinutes()
-      let matchClock = 'AM'
-      let awayScore = 0
-      let homeScore = 0
-
-      if (matchHour > 12 || (matchHour === 12 && matchMinute > 0)) {
-        matchHour = matchHour % 12
-        matchClock = 'PM'
-      }
-
-      if (matchHour < 10) {
-        matchHour = '0' + matchHour
-      }
-
-      if (matchMinute < 10) {
-        matchMinute = '0' + matchMinute
-      }
-
-      if (match.score.extraTime.awayTeam && match.score.extraTime.homeTeam) {
-        awayScore += match.score.extraTime.awayTeam
-        homeScore += match.score.extraTime.homeTeam
-      }
-
-      if (match.score.fullTime.awayTeam && match.score.fullTime.homeTeam) {
-        awayScore += match.score.fullTime.awayTeam
-        homeScore += match.score.fullTime.homeTeam
-      }
-
-      if (match.score.halfTime.awayTeam && match.score.halfTime.homeTeam) {
-        awayScore += match.score.halfTime.awayTeam
-        homeScore += match.score.halfTime.homeTeam
-      }
-
-      if (match.score.penalties.awayTeam && match.score.penalties.homeTeam) {
-        awayScore += match.score.penalties.awayTeam
-        homeScore += match.score.penalties.homeTeam
-      }
-
-      hMatches = `
-                    <tr>
-                      <td>
-                        <a
-                          class="purple-text text-darken-4"
-                          href="#team-detail"
-                          data-team-id="${match.awayTeam.id}">${match.awayTeam.name}</a>
-                      </td>
-                      <td>
-                        <a
-                          class="purple-text text-darken-4"
-                          href="#match-save"
-                          data-match-key="${key}">
-                          <p>${awayScore} : ${homeScore}</p>
-                          <p>${matchMonth}/${matchDay}/${matchYear}</p>
-                          <p>${matchHour}:${matchMinute} ${matchClock}</p>
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          class="purple-text text-darken-4"
-                          href="#team-detail"
-                          data-team-id="${match.homeTeam.id}">${match.homeTeam.name}</a>
-                      </td>
-                    </tr>
-                  ` + hMatches
+      hMatches += rowMatch(match, key)
     })
 
     eListMatchesTable.innerHTML = hMatches
