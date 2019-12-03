@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
     soccer.current_page = `${soccer.main_page}/${soccer.current_page}`
   }
 
+  soccer.query = new URLSearchParams(window.location.search)
+
   soccer.container = document.getElementById('Container')
 
   // Load available navigation

@@ -7,6 +7,7 @@ var soccer = {
   // current page
   main_page: '',
   current_page: '',
+  query: {},
   // current container
   container: null,
   // available pages
