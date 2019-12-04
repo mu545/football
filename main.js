@@ -265,6 +265,28 @@ function rowMatch(match, key) {
 }
 
 /**
+ * Row team.
+ *
+ * @param   object
+ * @param   number
+ * @return  string
+ */
+function rowTeam(team, key) {
+  return `
+          <tr>
+            <td>
+              <a
+                class="purple-text text-darken-4"
+                href="#team-save"
+                data-team-key="${key}">
+                <p>${team.name}</p>
+              </a>
+            </td>
+          </tr>
+        `
+}
+
+/**
  * Row player.
  *
  * @param   object
