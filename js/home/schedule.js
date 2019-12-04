@@ -4,7 +4,7 @@
  * @return  void
  */
 soccer.pages['home/schedule'] = function () {
-  let eListsMatchesTable = document.getElementById('ListMatchesTable')
+  let eListMatchesTable = document.getElementById('ListMatchesTable')
   let matches = {
     total: 0
   }
@@ -35,9 +35,33 @@ soccer.pages['home/schedule'] = function () {
         }
       })
       .then(function () {
-        eListsMatchesTable.innerHTML = hMatches
+        eListMatchesTable.innerHTML = hMatches
 
-        eListsMatchesTable.querySelectorAll('a[href="#match-save"]')
+        eListMatchesTable.querySelectorAll('a[href="#team-detail"]')
+          .forEach(function (aTeam) {
+            aTeam.addEventListener('click', function () {
+              loadPage('home/team-detail')
+                .then(function (pageContent) {
+                  let dataset = aTeam.dataset
+
+                  soccer.container.innerHTML = pageContent
+                  soccer.pages[soccer.current_page]({
+                    id: dataset.teamId,
+                    back: function () {
+                      loadPage('home/schedule')
+                        .then(function (pageContent) {
+                          soccer.container.innerHTML = pageContent
+                          soccer.pages[soccer.current_page]()
+                        })
+                        .catch(pageError)
+                    }
+                  })
+                })
+                .catch(pageError)
+            })
+          })
+
+        eListMatchesTable.querySelectorAll('a[href="#match-save"]')
           .forEach(function (aMatch) {
             aMatch.addEventListener('click', function () {
               removeMatch(aMatch)

@@ -136,17 +136,23 @@ soccer.pages['home/league-detail'] = function (query) {
     eListMatchesTable.innerHTML = hMatches
 
     eListMatchesTable.querySelectorAll('a[href="#team-detail"]')
-      .forEach(function (aMatch) {
-        aMatch.addEventListener('click', function () {
+      .forEach(function (aTeam) {
+        aTeam.addEventListener('click', function () {
           loadPage('home/team-detail')
             .then(function (pageContent) {
-              let dataset = aMatch.dataset
+              let dataset = aTeam.dataset
 
               soccer.container.innerHTML = pageContent
               soccer.pages[soccer.current_page]({
                 id: dataset.teamId,
-                match_id: query.id,
-                match_season_year: query.season_year
+                back: function () {
+                  loadPage('home/league-detail')
+                    .then(function (pageContent) {
+                      soccer.container.innerHTML = pageContent
+                      soccer.pages[soccer.current_page](query)
+                    })
+                    .catch(pageError)
+                }
               })
             })
             .catch(pageError)

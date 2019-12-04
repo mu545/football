@@ -23,17 +23,7 @@ soccer.pages['home/team-detail'] = function (query) {
     .catch(logError)
 
   document.getElementById('Back')
-    .addEventListener('click', function () {
-      loadPage('home/league-detail')
-      .then(function (pageContent) {
-        soccer.container.innerHTML = pageContent
-        soccer.pages[soccer.current_page]({
-          id: query.match_id,
-          season_year: query.match_season_year,
-        })
-      })
-      .catch(pageError)
-    })
+    .addEventListener('click', query.back)
 
   document.getElementById('TeamSave')
     .addEventListener('click', function () {
