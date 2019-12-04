@@ -9,7 +9,13 @@ soccer.pages['home/league'] = function () {
 
   footballCompetitions()
     .then(listLeague)
-    .catch(logError)
+    .catch(function (err) {
+      eListLeague.innerHTML = `
+                              <p class="collection-item">no league, please load this page with internet first to get league data.</p>
+                              `
+
+      logError(err)
+    })
 
   /**
    * Fill list league.
@@ -29,13 +35,13 @@ soccer.pages['home/league'] = function () {
       if (typeof iLeauge[competition.area.id] === 'undefined') {
         iLeauge[competition.area.id] = true
 
-        hLeague += `
-                          <div class="row" style="margin-bottom: 0;">
-                          <div class="col s12 red lighten-2">
-                          <p class="white-text">${competition.area.name}</p>
-                          </div>
-                          </div>
-                         `
+        hLeague +=  `
+                    <div class="row" style="margin-bottom: 0;">
+                    <div class="col s12 red lighten-2">
+                    <p class="white-text">${competition.area.name}</p>
+                    </div>
+                    </div>
+                    `
       }
 
       let seasonYear = null
@@ -118,7 +124,19 @@ soccer.pages['home/league-detail'] = function (query) {
 
   footballMatches(query.id, query.season_year)
     .then(listMatches)
-    .catch(logError)
+    .catch(function (err) {
+      eListMatchesTable.innerHTML = `
+                                    <tr>
+                                      <th
+                                        class="center-align"
+                                        colspan="3">
+                                        no league, please load this page with internet first to get league data.
+                                      </th>
+                                    </tr>
+                                    `
+
+      logError(err)
+    })
 
   /**
    * Fill list matches.

@@ -20,7 +20,19 @@ soccer.pages['home/team-detail'] = function (query) {
       listPlayer(res.team.squad)
       team = res.team
     })
-    .catch(logError)
+    .catch(function (err) {
+      eListPlayer.innerHTML = `
+                              <tr>
+                                <th
+                                  class="center-align"
+                                  colspan="2">
+                                  no team, please load this page with internet first to get team information.
+                                </th>
+                              </tr>
+                              `
+
+      logError(err)
+    })
 
   document.getElementById('Back')
     .addEventListener('click', query.back)

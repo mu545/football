@@ -35,6 +35,20 @@ soccer.pages['home/favorite'] = function () {
         }
       })
       .then(function () {
+        if (teams.total < 1) {
+          eListTeamsTable.innerHTML = `
+                                      <tr>
+                                        <th
+                                          class="center-align"
+                                          colspan="1">
+                                          no favorite team.
+                                        </th>
+                                      </tr>
+                                      `
+
+          return
+        }
+
         eListTeamsTable.innerHTML = hTeams
 
         eListTeamsTable.querySelectorAll('a[href="#team-save"]')

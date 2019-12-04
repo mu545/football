@@ -35,6 +35,20 @@ soccer.pages['home/schedule'] = function () {
         }
       })
       .then(function () {
+        if (matches.total < 1) {
+          eListMatchesTable.innerHTML = `
+                                        <tr>
+                                          <th
+                                            class="center-align"
+                                            colspan="3">
+                                            no schedule saved.
+                                          </th>
+                                        </tr>
+                                        `
+
+          return
+        }
+
         eListMatchesTable.innerHTML = hMatches
 
         eListMatchesTable.querySelectorAll('a[href="#team-detail"]')
