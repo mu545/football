@@ -183,7 +183,7 @@ function dbCursor(storeName) {
 }
 
 /**
- * Row match
+ * Row match.
  *
  * @param   object
  * @param   number
@@ -262,4 +262,19 @@ function rowMatch(match, key) {
             </td>
           </tr>
         `
+}
+
+/**
+ * Row player.
+ *
+ * @param   object
+ * @return  void
+ */
+function rowPlayer(player) {
+  return `
+          <tr>
+            <td>${player.name}</td>
+            <td>${player.position || player.role.replace('_', ' ')}</td>
+          </tr>
+         `
 }

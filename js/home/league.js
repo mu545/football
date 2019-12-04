@@ -135,6 +135,24 @@ soccer.pages['home/league-detail'] = function (query) {
 
     eListMatchesTable.innerHTML = hMatches
 
+    eListMatchesTable.querySelectorAll('a[href="#team-detail"]')
+      .forEach(function (aMatch) {
+        aMatch.addEventListener('click', function () {
+          loadPage('home/team-detail')
+            .then(function (pageContent) {
+              let dataset = aMatch.dataset
+
+              soccer.container.innerHTML = pageContent
+              soccer.pages[soccer.current_page]({
+                id: dataset.teamId,
+                match_id: query.id,
+                match_season_year: query.season_year
+              })
+            })
+            .catch(pageError)
+        })
+      })
+
     eListMatchesTable.querySelectorAll('a[href="#match-save"]')
       .forEach(function (aMatch) {
         aMatch.addEventListener('click', function () {

@@ -16,6 +16,7 @@ const CONFIG_CACHE_URLS = [
   '/images/sport-podium.png',
   '/images/sport-watch.png',
   '/images/sport-done.png',
+  '/images/sport-ribbon.png',
   '/main.js',
   '/js/idb.min.js',
   '/js/materialize.min.js',
@@ -24,11 +25,13 @@ const CONFIG_CACHE_URLS = [
   '/js/home/index.js',
   '/js/home/league.js',
   '/js/home/schedule.js',
+  '/js/home/team.js',
   '/index.html',
   '/pages/home/index.html',
   '/pages/home/league.html',
   '/pages/home/league-detail.html',
-  '/pages/home/schedule.html'
+  '/pages/home/schedule.html',
+  '/pages/home/team-detail.html'
 ]
 CONFIG_API_URL = 'http://localhost:3000/users/api/v1'
 

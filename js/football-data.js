@@ -70,3 +70,22 @@ function footballMatches(leagueId, seasonYear) {
       }
     })
 }
+
+/**
+ * Get team information.
+ *
+ * @param   number
+ * @return  promise
+ */
+function footballTeam(teamId) {
+  let url = `${soccer.api_url}/team/${teamId}`
+
+  return footballCache(url)
+    .then(function (res) {
+      if (res === null) {
+        return footballServer(url)
+      } else {
+        return Promise.resolve(res)
+      }
+    })
+}

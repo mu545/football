@@ -80,6 +80,14 @@ window.addEventListener('load', function () {
             unique: true
           })
         }
+
+        if (!db.objectStoreNames.contains('teams')) {
+          let teams = db.createObjectStore('teams')
+
+          teams.createIndex('id', 'id', {
+            unique: true
+          })
+        }
       }
     })
 
