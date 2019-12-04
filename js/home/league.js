@@ -138,6 +138,16 @@ soccer.pages['home/league-detail'] = function (query) {
       logError(err)
     })
 
+  document.getElementById('Back')
+    .addEventListener('click', function () {
+      loadPage('home/league')
+        .then(function (pageContent) {
+          soccer.container.innerHTML = pageContent
+          soccer.pages[soccer.current_page]()
+        })
+        .catch(pageError)
+    })
+
   /**
    * Fill list matches.
    *
