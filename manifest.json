@@ -4,6 +4,8 @@
   "description": "The web app will help people to get soccer information",
   "start_url": "/",
   "display": "fullscreen",
+  "theme_color": "#EE6E73",
+  "background_color": "#EE6E73",
   "icons": [
     {
       "src": "/images/icon-72x72.png",
@@ -37,7 +39,7 @@
     },
     {
       "src": "/images/icon-384x384.png",
-      "sizes": "386x386",
+      "sizes": "384x384",
       "type": "image/png"
     },
     {

@@ -9,7 +9,7 @@ const CONFIG_CACHE_URLS = [
   '/images/icon-144x144.png',
   '/images/icon-192x192.png',
   '/images/icon-256x256.png',
-  '/images/icon-386x386.png',
+  '/images/icon-384x384.png',
   '/images/icon-512x512.png',
   '/images/sick.png',
   '/images/sport-cup.png',
