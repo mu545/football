@@ -22,18 +22,18 @@ const CONFIG_CACHE_URLS = [
   '/js/materialize.min.js',
   '/js/index.js',
   '/js/football-data.js',
-  '/js/home/index.js',
-  '/js/home/league.js',
-  '/js/home/schedule.js',
-  '/js/home/team.js',
-  '/js/home/favorite.js',
+  '/js/pages/home.js',
+  '/js/pages/league.js',
+  '/js/pages/schedule.js',
+  '/js/pages/team.js',
+  '/js/pages/favorite.js',
   '/index.html',
-  '/pages/home/index.html',
-  '/pages/home/league.html',
-  '/pages/home/league-detail.html',
-  '/pages/home/schedule.html',
-  '/pages/home/team-detail.html',
-  '/pages/home/favorite.html'
+  '/pages/home.html',
+  '/pages/league.html',
+  '/pages/league/detail.html',
+  '/pages/schedule.html',
+  '/pages/team.html',
+  '/pages/favorite.html'
 ]
 CONFIG_API_URL = 'http://localhost:3000/users/api/v1'
 

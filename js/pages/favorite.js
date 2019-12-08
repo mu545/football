@@ -1,9 +1,9 @@
 /**
- * Home favorite init.
+ * Page favorite init.
  *
  * @return  void
  */
-soccer.pages['home/favorite'] = function () {
+soccer.pages['favorite'] = function () {
   let eListTeamsTable = document.getElementById('ListTeamsTable')
   let teams = {
     total: 0

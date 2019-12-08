@@ -241,8 +241,7 @@ function rowMatch(match, key) {
             <td>
               <a
                 class="purple-text text-darken-4"
-                href="#team-detail"
-                data-team-id="${match.awayTeam.id}">${match.awayTeam.name}</a>
+                href="#team?id=${match.awayTeam.id}">${match.awayTeam.name}</a>
             </td>
             <td>
               <a
@@ -257,8 +256,7 @@ function rowMatch(match, key) {
             <td>
               <a
                 class="purple-text text-darken-4"
-                href="#team-detail"
-                data-team-id="${match.homeTeam.id}">${match.homeTeam.name}</a>
+                href="#team?id=${match.homeTeam.id}">${match.homeTeam.name}</a>
             </td>
           </tr>
         `

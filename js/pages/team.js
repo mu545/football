@@ -1,20 +1,20 @@
 /**
- * Home team detail init.
+ * Page team init.
  *
- * @param   object
  * @return  void
  */
-soccer.pages['home/team-detail'] = function (query) {
+soccer.pages['team'] = function () {
   let eListPlayer = document.getElementById('ListPlayerTable')
   let team = {}
+  let teamId = soccer.query.get('id')
 
-  if (typeof query === 'undefined') {
-    window.location.href = '/index.html?#league'
+  if (teamId === null) {
+    window.location.href = '#league'
 
     return
   }
 
-  footballTeam(query.id)
+  footballTeam(teamId)
     .then(function (res) {
       teamInfo(res.team)
       listPlayer(res.team.squad)
@@ -33,9 +33,6 @@ soccer.pages['home/team-detail'] = function (query) {
 
       logError(err)
     })
-
-  document.getElementById('Back')
-    .addEventListener('click', query.back)
 
   document.getElementById('TeamSave')
     .addEventListener('click', function () {

@@ -1,22 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Initialization global variable
-  soccer.main_page = window.location.pathname
-    .substr(1, Math.ceil(window.location.pathname.indexOf('.') - 1))
-    .toLowerCase()
-
-  if (soccer.main_page === '' || soccer.main_page === 'index') {
-    soccer.main_page = 'home'
-  }
-
-  soccer.current_page = window.location.hash.substr(1).toLowerCase()
+  let currentPath = window.location.hash.split('?')
+  soccer.current_page = `${currentPath[0].substr(1).toLowerCase()}`
 
   if (soccer.current_page === '') {
-    soccer.current_page = `${soccer.main_page}/index`
-  } else {
-    soccer.current_page = `${soccer.main_page}/${soccer.current_page}`
+    soccer.current_page = 'home'
   }
 
-  soccer.query = new URLSearchParams(window.location.search)
+  soccer.query = new URLSearchParams(currentPath[1] || '')
 
   soccer.container = document.getElementById('Container')
 
@@ -104,6 +95,27 @@ window.addEventListener('load', function () {
    * @return  promise
    */
   function loadCurrentPage(msgChain) {
+    // change page on hash change
+    window.addEventListener('hashchange', function () {
+      let newPath = window.location.hash.split('?')
+      soccer.current_page = `${newPath[0].substr(1).toLowerCase()}`
+
+      if (soccer.current_page === '') {
+        soccer.current_page = 'home'
+      }
+
+      soccer.query = new URLSearchParams(newPath[1] || '')
+
+      loadPage()
+        .then(function (pageContent) {
+          soccer.container.innerHTML = pageContent
+          soccer.pages[soccer.current_page]()
+
+          console.log(`loadCurrentPage: ${soccer.current_page}`)
+        })
+        .catch(pageError)
+    })
+
     return loadPage()
       .then(function (pageContent) {
         soccer.container.innerHTML = pageContent

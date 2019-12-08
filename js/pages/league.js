@@ -1,9 +1,9 @@
 /**
- * Home league init.
+ * Page league init.
  *
  * @return  void
  */
-soccer.pages['home/league'] = function () {
+soccer.pages['league'] = function () {
   let availableLeague = [2000, 2001, 2002, 2003, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2021]
   let eListLeague = document.getElementById('ListLeague')
 
@@ -70,59 +70,33 @@ soccer.pages['home/league'] = function () {
                     <p><small class="grey-text text-darken-4">Winner: ${winner}</small></p>
                     <a
                       class="secondary-content btn-small red lighten-3"
-                      href="#league-detail"
-                      data-competition-id="${competition.id}"
-                      data-season-year="${seasonYear}">&#x279f;</a>
+                      href="#league/detail?id=${competition.id}&season_year=${seasonYear}">&#x279f;</a>
                   </div>
                  `
     })
 
     eListLeague.innerHTML = hLeague
-
-    eListLeague.querySelectorAll('.collection-item a')
-      .forEach(function (aLeague) {
-        aLeague.addEventListener('click', detailLeague, false)
-      })
-  }
-
-  /**
-   * Get detail a league.
-   *
-   * @param   dom
-   * @return  void
-   */
-  function detailLeague(e) {
-    loadPage('home/league-detail')
-      .then(function (pageContent) {
-        let dataset = e.target.dataset
-
-        soccer.container.innerHTML = pageContent
-        soccer.pages[soccer.current_page]({
-          id: dataset.competitionId,
-          season_year: dataset.seasonYear
-        })
-      })
-      .catch(pageError)
   }
 }
 
 /**
- * Home detail league init.
+ * Page detail league init.
  *
- * @param   object
  * @return  void
  */
-soccer.pages['home/league-detail'] = function (query) {
+soccer.pages['league/detail'] = function () {
   let eListMatchesTable = document.getElementById('ListMatchesTable')
   let matches = {}
+  let competitionId = soccer.query.get('id')
+  let seasonYear = soccer.query.get('season_year')
 
-  if (typeof query === 'undefined') {
-    window.location.href = '/index.html?#league'
+  if (competitionId === null || seasonYear === null) {
+    window.location.href = '#league'
 
     return
   }
 
-  footballMatches(query.id, query.season_year)
+  footballMatches(competitionId, seasonYear)
     .then(listMatches)
     .catch(function (err) {
       eListMatchesTable.innerHTML = `
@@ -136,16 +110,6 @@ soccer.pages['home/league-detail'] = function (query) {
                                     `
 
       logError(err)
-    })
-
-  document.getElementById('Back')
-    .addEventListener('click', function () {
-      loadPage('home/league')
-        .then(function (pageContent) {
-          soccer.container.innerHTML = pageContent
-          soccer.pages[soccer.current_page]()
-        })
-        .catch(pageError)
     })
 
   /**
@@ -162,30 +126,6 @@ soccer.pages['home/league-detail'] = function (query) {
     })
 
     eListMatchesTable.innerHTML = hMatches
-
-    eListMatchesTable.querySelectorAll('a[href="#team-detail"]')
-      .forEach(function (aTeam) {
-        aTeam.addEventListener('click', function () {
-          loadPage('home/team-detail')
-            .then(function (pageContent) {
-              let dataset = aTeam.dataset
-
-              soccer.container.innerHTML = pageContent
-              soccer.pages[soccer.current_page]({
-                id: dataset.teamId,
-                back: function () {
-                  loadPage('home/league-detail')
-                    .then(function (pageContent) {
-                      soccer.container.innerHTML = pageContent
-                      soccer.pages[soccer.current_page](query)
-                    })
-                    .catch(pageError)
-                }
-              })
-            })
-            .catch(pageError)
-        })
-      })
 
     eListMatchesTable.querySelectorAll('a[href="#match-save"]')
       .forEach(function (aMatch) {
