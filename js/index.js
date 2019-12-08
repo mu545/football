@@ -25,6 +25,7 @@ window.addEventListener('load', function () {
   // Initialization page.
   serviceWorker('Init')
     .then(openDB)
+    .then(isFirstAccess)
     .then(loadCurrentPage)
     .then(console.log)
     .catch(pageError)
@@ -64,6 +65,14 @@ window.addEventListener('load', function () {
   function openDB(msgChain) {
     soccer.db = idb.openDB(soccer.db_name, soccer.db_version, {
       upgrade: function (db) {
+        if (!db.objectStoreNames.contains('settings')) {
+          let settings = db.createObjectStore('settings')
+
+          settings.createIndex('id', 'id', {
+            unique: true
+          })
+        }
+
         if (!db.objectStoreNames.contains('matches')) {
           let matches = db.createObjectStore('matches')
 
@@ -85,6 +94,28 @@ window.addEventListener('load', function () {
     msgChain += '\nopenDB: database connected'
 
     return Promise.resolve(msgChain)
+  }
+
+  /**
+   * Is first access application
+   * so prompt modal to reload.
+   *
+   * @param   string
+   * @return  void
+   */
+  function isFirstAccess(msgChain) {
+    return dbGet('settings', 'first_access')
+      .then(function (firstAccess) {
+        if (!firstAccess) {
+          soccer.current_page = 'first-access'
+
+          msgChain += '\nisFirstAccess: true'
+        } else {
+          msgChain += '\nisFirstAccess: false'
+        }
+
+        return Promise.resolve(msgChain)
+      })
   }
 
   /**
