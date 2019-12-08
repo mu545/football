@@ -69,8 +69,10 @@ soccer.pages['league'] = function () {
                     <p><small class="grey-text text-darken-4">Season: ${startDate} - ${endDate}</small></p>
                     <p><small class="grey-text text-darken-4">Winner: ${winner}</small></p>
                     <a
-                      class="secondary-content btn-small red lighten-3"
-                      href="#league/detail?id=${competition.id}&season_year=${seasonYear}">&#x279f;</a>
+                      class="secondary-content red-text text-lighten-3"
+                      href="#league/detail?id=${competition.id}&season_year=${seasonYear}">
+                      <i class="material-icons">arrow_forward</i>
+                    </a>
                   </div>
                  `
     })
@@ -103,7 +105,7 @@ soccer.pages['league/detail'] = function () {
                                     <tr>
                                       <th
                                         class="center-align"
-                                        colspan="3">
+                                        colspan="4">
                                         no league, please load this page with internet first to get league data.
                                       </th>
                                     </tr>
@@ -127,10 +129,10 @@ soccer.pages['league/detail'] = function () {
 
     eListMatchesTable.innerHTML = hMatches
 
-    eListMatchesTable.querySelectorAll('a[href="#match-save"]')
-      .forEach(function (aMatch) {
-        aMatch.addEventListener('click', function () {
-          saveMatch(aMatch.dataset.matchKey)
+    eListMatchesTable.querySelectorAll('button[data-match-key]')
+      .forEach(function (btnMatch) {
+        btnMatch.addEventListener('click', function () {
+          saveMatch(btnMatch.dataset.matchKey)
         })
       })
 

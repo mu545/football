@@ -244,19 +244,22 @@ function rowMatch(match, key) {
                 href="#team?id=${match.awayTeam.id}">${match.awayTeam.name}</a>
             </td>
             <td>
-              <a
-                class="purple-text text-darken-4"
-                href="#match-save"
-                data-match-key="${key}">
-                <p>${awayScore} : ${homeScore}</p>
-                <p>${matchMonth}/${matchDay}/${matchYear}</p>
-                <p>${matchHour}:${matchMinute} ${matchClock}</p>
-              </a>
+              <p>${awayScore} : ${homeScore}</p>
+              <p>${matchMonth}/${matchDay}/${matchYear}</p>
+              <p>${matchHour}:${matchMinute} ${matchClock}</p>
             </td>
             <td>
               <a
                 class="purple-text text-darken-4"
                 href="#team?id=${match.homeTeam.id}">${match.homeTeam.name}</a>
+            </td>
+            <td class="grey lighten-5">
+              <button
+                class="btn-small red lighten-3 z-depth-0"
+                type="button"
+                data-match-key="${key}">
+                <i class="material-icons">access_time</i>
+              </button>
             </td>
           </tr>
         `
@@ -275,10 +278,15 @@ function rowTeam(team, key) {
             <td>
               <a
                 class="purple-text text-darken-4"
-                href="#team-save"
+                href="#team?id=${team.id}">${team.name}</a>
+            </td>
+            <td class="grey lighten-5">
+              <button
+                class="btn-small red lighten-3 z-depth-0"
+                type="button"
                 data-team-key="${key}">
-                <p>${team.name}</p>
-              </a>
+                <i class="material-icons">star_border</i>
+              </button>
             </td>
           </tr>
         `

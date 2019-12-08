@@ -38,11 +38,11 @@ soccer.pages['favorite'] = function () {
         if (teams.total < 1) {
           eListTeamsTable.innerHTML = `
                                       <tr>
-                                        <th
+                                        <td
                                           class="center-align"
-                                          colspan="1">
+                                          colspan="2">
                                           no favorite team.
-                                        </th>
+                                        </td>
                                       </tr>
                                       `
 
@@ -51,10 +51,10 @@ soccer.pages['favorite'] = function () {
 
         eListTeamsTable.innerHTML = hTeams
 
-        eListTeamsTable.querySelectorAll('a[href="#team-save"]')
-          .forEach(function (aTeam) {
-            aTeam.addEventListener('click', function () {
-              removeTeam(aTeam)
+        eListTeamsTable.querySelectorAll('button[data-team-key]')
+          .forEach(function (btnTeam) {
+            btnTeam.addEventListener('click', function () {
+              removeTeam(btnTeam)
             })
           })
       })
@@ -66,8 +66,8 @@ soccer.pages['favorite'] = function () {
    * @param   dom
    * @return  void
    */
-  function removeTeam(aTeam) {
-    let team = teams[aTeam.dataset.teamKey]
+  function removeTeam(btnTeam) {
+    let team = teams[btnTeam.dataset.teamKey]
 
     dbDelete('teams', team.id)
       .then(function () {
@@ -75,10 +75,10 @@ soccer.pages['favorite'] = function () {
           html: 'team removed from favorite'
         })
 
-        aTeam.parentNode.parentNode.parentNode
-          .removeChild(aTeam.parentNode.parentNode)
+        btnTeam.parentNode.parentNode.parentNode
+          .removeChild(btnTeam.parentNode.parentNode)
 
-        delete teams[aTeam.dataset.teamKey]
+        delete teams[btnTeam.dataset.teamKey]
       })
       .catch(function () {
         M.toast({

@@ -40,7 +40,7 @@ soccer.pages['schedule'] = function () {
                                         <tr>
                                           <th
                                             class="center-align"
-                                            colspan="3">
+                                            colspan="4">
                                             no schedule saved.
                                           </th>
                                         </tr>
@@ -51,10 +51,10 @@ soccer.pages['schedule'] = function () {
 
         eListMatchesTable.innerHTML = hMatches
 
-        eListMatchesTable.querySelectorAll('a[href="#match-save"]')
-          .forEach(function (aMatch) {
-            aMatch.addEventListener('click', function () {
-              removeMatch(aMatch)
+        eListMatchesTable.querySelectorAll('button[data-match-key]')
+          .forEach(function (btnMatch) {
+            btnMatch.addEventListener('click', function () {
+              removeMatch(btnMatch)
             })
           })
       })
@@ -66,8 +66,8 @@ soccer.pages['schedule'] = function () {
    * @param   dom
    * @return  void
    */
-  function removeMatch(aMatch) {
-    let match = matches[aMatch.dataset.matchKey]
+  function removeMatch(btnMatch) {
+    let match = matches[btnMatch.dataset.matchKey]
 
     dbDelete('matches', match.id)
       .then(function () {
@@ -75,10 +75,10 @@ soccer.pages['schedule'] = function () {
           html: 'match removed from watching schedule'
         })
 
-        aMatch.parentNode.parentNode.parentNode
-          .removeChild(aMatch.parentNode.parentNode)
+        btnMatch.parentNode.parentNode.parentNode
+          .removeChild(btnMatch.parentNode.parentNode)
 
-        delete matches[aMatch.dataset.matchKey]
+        delete matches[btnMatch.dataset.matchKey]
       })
       .catch(function () {
         M.toast({

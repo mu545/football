@@ -1,36 +1,39 @@
 <nav class="transparent z-depth-0">
   <div class="nav-wrapper">
-    <a
-      class="btn-small red lighten-3"
-      href="javascript:window.history.back()">&#x21e6;</a>
+    <ul>
+      <li>
+        <a
+          class="transparent red-text lighten-3"
+          href="javascript:window.history.back()">
+          <i class="material-icons left">arrow_back</i>
+          Back
+        </a>
+      </li>
+    </ul>
   </div>
 </nav>
-
-<div class="collection">
-  <div class="collection-item avatar">
-    <img
-      class="circle"
-      src="/images/sport-done.png">
-    <span class="title purple-text text-darken-4">Helps</span>
-    <p>Click the date to adds into watching schedule</p>
-    <p>Click the team to see detail information</p>
-  </div>
-</div>
 
 <div class="collection-item">
   <table class="centered">
     <thead>
       <tr>
-        <th width="400">Away</th>
-        <th width="200">score</th>
-        <th width="400">Home</th>
+        <th width="350">AWAY</th>
+        <th width="200">SCORE</th>
+        <th width="350">HOME</th>
+        <th
+          class="grey lighten-5"
+          width="100">
+          <small>
+            <small>ADD TO SCHEDULE</small>
+          </small>
+        </th>
       </tr>
     </thead>
     <tbody id="ListMatchesTable">
       <tr>
         <th
           class="center-align"
-          colspan="3">loading ...</th>
+          colspan="4">loading ...</th>
       </tr>
 
       <!-- list matches -->

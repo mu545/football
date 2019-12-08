@@ -1,20 +1,17 @@
 <nav class="transparent z-depth-0">
   <div class="nav-wrapper">
-    <a
-      class="btn-small red lighten-3"
-      href="javascript:window.history.back()">&#x21e6;</a>
+    <ul>
+      <li>
+        <a
+          class="transparent red-text lighten-3"
+          href="javascript:window.history.back()">
+          <i class="material-icons left">arrow_back</i>
+          Back
+        </a>
+      </li>
+    </ul>
   </div>
 </nav>
-
-<div class="collection">
-  <div class="collection-item avatar">
-    <img
-      class="circle"
-      src="/images/sport-done.png">
-    <span class="title purple-text text-darken-4">Helps</span>
-    <p>Click the star to adds into a favorite team</p>
-  </div>
-</div>
 
 <div class="collection">
   <div class="collection-item avatar">
@@ -26,10 +23,12 @@
       id="TeamName">Team Name</span>
     <p id="TeamEmail">Email: -</p>
     <p id="TeamPhone">Phone: -</p>
-    <button
-      class="secondary-content btn-small red lighten-3"
-      id="TeamSave"
-      href="#team-save">&#x272D;</button>
+    <a
+      class="secondary-content red-text lighten-3"
+      id="TeamSaveBtn"
+      href="javascript:void(0)">
+      <i class="material-icons">star</i>
+    </a>
   </div>
 </div>
 

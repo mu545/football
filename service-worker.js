@@ -2,6 +2,7 @@
 const CONFIG_CACHE_NAME = 'soccer-v0.0.1'
 const CONFIG_CACHE_URLS = [
   '/',
+  '/manifest.json',
   '/css/materialize.min.css',
   '/images/icon-72x72.png',
   '/images/icon-96x96.png',

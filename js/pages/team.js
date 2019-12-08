@@ -34,7 +34,7 @@ soccer.pages['team'] = function () {
       logError(err)
     })
 
-  document.getElementById('TeamSave')
+  document.getElementById('TeamSaveBtn')
     .addEventListener('click', function () {
       dbGet('teams', team.id)
         .then(function (currentTeam) {
