@@ -25,6 +25,8 @@ window.addEventListener('load', function () {
   // Initialization page.
   serviceWorker('Init')
     .then(openDB)
+    .then(requestNotification)
+    .then(pushManager)
     .then(isFirstAccess)
     .then(loadCurrentPage)
     .then(console.log)
@@ -94,6 +96,93 @@ window.addEventListener('load', function () {
     msgChain += '\nopenDB: database connected'
 
     return Promise.resolve(msgChain)
+  }
+
+  /**
+   * Request notification.
+   *
+   * @param   string
+   * @return  promise
+   */
+  function requestNotification(msgChain) {
+    if ('Notification' in window) {
+      return Notification.requestPermission()
+        .then(function (result) {
+          if (result === 'denied') {
+            msgChain += '\nrequestNotification: not allowed'
+          } else if (result === 'default') {
+            msgChain += '\nrequestNotification: user closed box dialog'
+          } else {
+            msgChain += '\nrequestNotification: allowed'
+          }
+
+          return Promise.resolve(msgChain)
+        })
+    } else {
+      msgChain += '\nrequestNotification: browser not support'
+
+      return Promise.resolve(msgChain)
+    }
+  }
+
+  /**
+   * Push manager.
+   *
+   * @param   string
+   * @return  promise
+   */
+  function pushManager(msgChain) {
+    if ('PushManager' in window) {
+      return navigator.serviceWorker.getRegistration()
+        .then(function (registration) {
+          return registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array('BHf1iutHq1lUAfcjIBcHKSVIQOXgs2ft8TBO7VrnckFm1DU1utBPRzN6N9p200j4riwkcPfGlDY8qjlxNjXdICw')
+          })
+          .then(function (subscribe) {
+            let p256dh = new Uint8Array(subscribe.getKey('p256dh'))
+            p256dh = btoa(String.fromCharCode.apply(null, p256dh))
+            let auth = new Uint8Array(subscribe.getKey('auth'))
+            auth = btoa(String.fromCharCode.apply(null, auth))
+
+            msgChain += `\npushManager: subscribe endpoint ${subscribe.endpoint}`
+            msgChain += `\npushManager: p256dh key ${p256dh}`
+            msgChain += `\npushManager: auth ${auth}`
+
+            return Promise.resolve(msgChain)
+          }).catch(function(e) {
+            msgChain += '\npushManager: could not subscribe'
+
+            return Promise.resolve(msgChain)
+          })
+        })
+    } else {
+      msgChain += '\npushManager: no found'
+
+      return Promise.resolve(msgChain)
+    }
+  }
+
+  /**
+   * Convert url base64.
+   *
+   * @param   string
+   * @return  array
+   */
+  function urlBase64ToUint8Array(base64String) {
+    let padding = '='.repeat((4 - base64String.length % 4) % 4)
+    let base64 = base64String + padding
+
+    base64 = base64.replace(/-/g, '+').replace(/_/g, '/')
+
+    let rawData = window.atob(base64)
+    let outputArray = new Uint8Array(rawData.length)
+
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i)
+    }
+
+    return outputArray;
   }
 
   /**

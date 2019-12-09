@@ -152,20 +152,15 @@ workbox.precaching.precacheAndRoute([
 ])
 
 workbox.routing.registerRoute(
-  new RegExp('/css/'),
-  new workbox.strategies.CacheFirst({
-    cacheName: 'css',
-    plugins: [
-      new workbox.expiration.Plugin({
-        maxEntries: 60,
-        maxAgeSeconds: 30 * 24 * 60 * 60
-      })
-    ]
-  })
+  /\.(?:js|css)$/,
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'static-source',
+    timeout: 30
+  }),
 )
 
 workbox.routing.registerRoute(
-  new RegExp('/images/'),
+  /\.(?:png|gif|jpg|jpeg|svg)$/,
   new workbox.strategies.CacheFirst({
     cacheName: 'images',
     plugins: [
@@ -174,14 +169,6 @@ workbox.routing.registerRoute(
         maxAgeSeconds: 30 * 24 * 60 * 60
       })
     ]
-  })
-)
-
-workbox.routing.registerRoute(
-  /\.(?:js)$/,
-  new workbox.strategies.StaleWhileRevalidate({
-    cacheName: 'js',
-    timeout: 30
   })
 )
 
@@ -210,9 +197,30 @@ workbox.routing.registerRoute(
 )
 
 workbox.routing.registerRoute(
-  /^http:\/\/localhost:3000\/users\/api\/v1/,
+  /^https:\/\/football-data-gateway.herokuapp.com\/users\/api\/v1/,
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: 'football-data',
     timeout: 30
   })
 )
+
+self.addEventListener('push', function (event) {
+  let body = 'push message no payload'
+
+  if (event.data) {
+    body = event.data.text()
+  }
+
+  let options = {
+    icon: '/images/icon-192x192.png',
+    body: body,
+    data: {
+      dateOfArrival: Date.now(),
+      primaryKey: 1
+    }
+  }
+
+  event.waitUntil(
+    self.registration.showNotification('Soccer Information', options)
+  )
+})

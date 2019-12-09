@@ -13,7 +13,7 @@ var soccer = {
   // available pages
   pages: {},
   // football-data api handler
-  api_url: 'http://localhost:3000/users/api/v1'
+  api_url: 'https://football-data-gateway.herokuapp.com/users/api/v1'
 }
 
 /**
