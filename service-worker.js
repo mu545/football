@@ -1,89 +1,218 @@
-// Service Worker Config
-const CONFIG_CACHE_NAME = 'soccer-v0.0.1'
-const CONFIG_CACHE_URLS = [
-  '/',
-  '/manifest.json',
-  '/css/materialize.min.css',
-  '/images/icon-72x72.png',
-  '/images/icon-96x96.png',
-  '/images/icon-128x128.png',
-  '/images/icon-144x144.png',
-  '/images/icon-192x192.png',
-  '/images/icon-256x256.png',
-  '/images/icon-384x384.png',
-  '/images/icon-512x512.png',
-  '/images/sick.png',
-  '/images/sport-cup.png',
-  '/images/sport-podium.png',
-  '/images/sport-watch.png',
-  '/images/sport-done.png',
-  '/images/sport-ribbon.png',
-  '/main.js',
-  '/js/idb.min.js',
-  '/js/materialize.min.js',
-  '/js/index.js',
-  '/js/football-data.js',
-  '/js/pages/first-access.js',
-  '/js/pages/home.js',
-  '/js/pages/league.js',
-  '/js/pages/schedule.js',
-  '/js/pages/team.js',
-  '/js/pages/favorite.js',
-  '/index.html',
-  '/pages/first-access.html',
-  '/pages/home.html',
-  '/pages/league.html',
-  '/pages/league/detail.html',
-  '/pages/schedule.html',
-  '/pages/team.html',
-  '/pages/favorite.html'
-]
-CONFIG_API_URL = 'http://localhost:3000/users/api/v1'
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
-self.addEventListener('install', function (event) {
-  event.waitUntil(
-    caches.open(CONFIG_CACHE_NAME)
-      .then(function (cache) {
-        return cache.addAll(CONFIG_CACHE_URLS)
-      })
-  )
-})
-
-self.addEventListener('activate', function (event) {
-  event.waitUntil(
-    caches.keys()
-      .then(function (cacheNames) {
-        return Promise.all(
-          cacheNames.map(function (cacheName) {
-            if (cacheName !== CONFIG_CACHE_NAME) {
-              console.log(`Service worker: cache ${cacheName} deleted`)
-
-              return caches.delete(cacheName)
-            }
-          })
-        )
-      })
-  )
-})
-
-self.addEventListener('fetch', function (event) {
-  if (event.request.url.indexOf(CONFIG_API_URL) > -1) {
-    event.respondWith(
-      caches.open(CONFIG_CACHE_NAME)
-        .then(function (cache) {
-          return fetch(event.request)
-            .then(function (response) {
-              cache.put(event.request.url, response.clone())
-              return response
-            })
-        })
-    )
-  } else {
-    event.respondWith(
-      caches.match(event.request, { ignoreSearch: true })
-        .then(function (response) {
-          return response || fetch(event.request)
-        })
-    )
+workbox.precaching.precacheAndRoute([
+  {
+    url: '/',
+    revision: 1
+  },
+  {
+    url: '/manifest.json',
+    revision: 1
+  },
+  {
+    url: '/css/materialize.min.css',
+    revision: 1
+  },
+  {
+    url: 'https://fonts.googleapis.com/icon?family=Material+Icons',
+    revision: 1
+  },
+  {
+    url: '/images/icon-72x72.png',
+    revision: 1
+  },
+  {
+    url: '/images/icon-96x96.png',
+    revision: 1
+  },
+  {
+    url: '/images/icon-128x128.png',
+    revision: 1
+  },
+  {
+    url: '/images/icon-144x144.png',
+    revision: 1
+  },
+  {
+    url: '/images/icon-192x192.png',
+    revision: 1
+  },
+  {
+    url: '/images/icon-256x256.png',
+    revision: 1
+  },
+  {
+    url: '/images/icon-384x384.png',
+    revision: 1
+  },
+  {
+    url: '/images/icon-512x512.png',
+    revision: 1
+  },
+  {
+    url: '/images/sick.png',
+    revision: 1
+  },
+  {
+    url: '/images/sport-cup.png',
+    revision: 1
+  },
+  {
+    url: '/images/sport-podium.png',
+    revision: 1
+  },
+  {
+    url: '/images/sport-watch.png',
+    revision: 1
+  },
+  {
+    url: '/images/sport-done.png',
+    revision: 1
+  },
+  {
+    url: '/images/sport-ribbon.png',
+    revision: 1
+  },
+  {
+    url: '/main.js',
+    revision: 1
+  },
+  {
+    url: '/js/idb.min.js',
+    revision: 1
+  },
+  {
+    url: '/js/materialize.min.js',
+    revision: 1
+  },
+  {
+    url: '/js/index.js',
+    revision: 1
+  },
+  {
+    url: '/js/football-data.js',
+    revision: 1
+  },
+  {
+    url: '/js/pages/first-access.js',
+    revision: 1
+  },
+  {
+    url: '/js/pages/home.js',
+    revision: 1
+  },
+  {
+    url: '/js/pages/league.js',
+    revision: 1
+  },
+  {
+    url: '/js/pages/schedule.js',
+    revision: 1
+  },
+  {
+    url: '/js/pages/team.js',
+    revision: 1
+  },
+  {
+    url: '/js/pages/favorite.js',
+    revision: 1
+  },
+  {
+    url: '/index.html',
+    revision: 1
+  },
+  {
+    url: '/pages/first-access.html',
+    revision: 1
+  },
+  {
+    url: '/pages/home.html',
+    revision: 1
+  },
+  {
+    url: '/pages/league.html',
+    revision: 1
+  },
+  {
+    url: '/pages/league/detail.html',
+    revision: 1
+  },
+  {
+    url: '/pages/schedule.html',
+    revision: 1
+  },
+  {
+    url: '/pages/team.html',
+    revision: 1
+  },
+  {
+    url: '/pages/favorite.html',
+    revision: 1
   }
-})
+])
+
+workbox.routing.registerRoute(
+  new RegExp('/css/'),
+  new workbox.strategies.CacheFirst({
+    cacheName: 'css',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60
+      })
+    ]
+  })
+)
+
+workbox.routing.registerRoute(
+  new RegExp('/images/'),
+  new workbox.strategies.CacheFirst({
+    cacheName: 'images',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60
+      })
+    ]
+  })
+)
+
+workbox.routing.registerRoute(
+  /\.(?:js)$/,
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'js',
+    timeout: 30
+  })
+)
+
+workbox.routing.registerRoute(
+  new RegExp('/pages/'),
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'pages',
+    timeout: 30
+  })
+)
+
+workbox.routing.registerRoute(
+  /^https:\/\/fonts\.gstatic\.com/,
+  new workbox.strategies.CacheFirst({
+    cacheName: 'google-fonts-webfonts',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200]
+      }),
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxEntries: 30
+      })
+    ]
+  })
+)
+
+workbox.routing.registerRoute(
+  /^http:\/\/localhost:3000\/users\/api\/v1/,
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'football-data',
+    timeout: 30
+  })
+)
